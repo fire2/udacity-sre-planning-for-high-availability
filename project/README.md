@@ -19,19 +19,23 @@ Author: Yoshiya Magana Martinez
 2. Details of the infrastructure according to the [requirement document](requirements.md) can be found [here](dr).
 3. Prometheus queries used in the Grafana dashboard are in [prometheus_queries](prometheus_queries.md)
 4. The screenshot of the Grafana dashboard is at [sre_grafana_dashboard.png](screenshots/sre_grafana_dashboard.png)
-5. Screenshot of the successful Terraform apply on zone1: [zone1_tf.png](screenshots/zone1_tf.png). This includes the 
+5. Screenshot of the successful Terraform apply on `zone1`: [zone1_tf.png](screenshots/zone1_tf.png). This includes the 
 primary RDS cluster.
-6. Screenshot of the successful Terraform apply on zone2: [zone2_tf.png](screenshots/zone2_tf.png). This includes the 
+6. Screenshot of the successful Terraform apply on `zone2`: [zone2_tf.png](screenshots/zone2_tf.png). This includes the 
 secondary RDS cluster.
 7. Screenshot aws describe on the RDS cluster on zone2: [rds.png](screenshots/rds.png). This verifies successful 
 provisioning of both clusters (note the ReplicationSourceIdentifier) and "in-sync" statuses on each instance.
-8. Instead of deleting the RDS clusters manually, I ran this command before destroying zone2 to promote the cluster 
+8. Instead of deleting the RDS clusters manually, I ran this command before destroying `zone2` to promote the cluster 
 to a standalone database so it could be destroyed via terraform:
 ```
 aws rds promote-read-replica-db-cluster --db-cluster-identifier udacity-db-cluster-s --profile udacity --region us-west-1
 ```
 Screenshot of destroying zone2: [zone2_tf_destroy.png](screenshots/zone2_tf_destroy.png)
-Screenshot of destroying zone1: [zone1_tf_destroy.png](screenshots/zone1_tf_destroy.png)
+Screenshot of destroying zone1: [zone1_tf_destroy.png](screenshots/zone1_tf_destroy.png). I had to destroy the resources
+in multiple attempts because the first ones got stuck destroying the Grafana load balancer, that's why the screenshot 
+shows way less resources deleted than initially created, because it only shows the resources deleted in the last 
+attempt, after which there were no resources left in `zone1`. They were all destroyed incrementally during the multiple
+attempts.
 
 ## General comments
 
