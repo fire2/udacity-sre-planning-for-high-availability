@@ -1356,7 +1356,7 @@ prometheusOperator:
   ## Admission webhook support for PrometheusRules resources added in Prometheus Operator 0.30 can be enabled to prevent incorrectly formatted
   ## rules from making their way into prometheus and potentially preventing the container from starting
   admissionWebhooks:
-    failurePolicy: Fail
+    failurePolicy: Ignore
     enabled: true
     ## A PEM encoded CA bundle which will be used to validate the webhook's server certificate.
     ## If unspecified, system trust roots on the apiserver are used.
@@ -1368,8 +1368,9 @@ prometheusOperator:
     patch:
       enabled: true
       image:
-        repository: jettech/kube-webhook-certgen
-        tag: v1.5.2
+        registry: registry.k8s.io
+        repository: ingress-nginx/kube-webhook-certgen
+        tag: v20221220-controller-v1.5.1-58-g787ea74b6
         sha: ""
         pullPolicy: IfNotPresent
       resources: {}
@@ -1576,8 +1577,9 @@ prometheusOperator:
   ## Prometheus-operator image
   ##
   image:
-    repository: quay.io/prometheus-operator/prometheus-operator
-    tag: v0.49.0
+    registry: quay.io
+    repository: prometheus-operator/prometheus-operator
+    tag: ""
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -1592,8 +1594,9 @@ prometheusOperator:
   ## Prometheus-config-reloader image to use for config and rule reloading
   ##
   prometheusConfigReloaderImage:
-    repository: quay.io/prometheus-operator/prometheus-config-reloader
-    tag: v0.49.0
+    registry: quay.io
+    repository: prometheus-operator/prometheus-config-reloader
+    tag: ""
     sha: ""
 
   ## Set the prometheus config reloader side-car CPU limit
@@ -1960,8 +1963,9 @@ prometheus:
     ## Image of Prometheus.
     ##
     image:
-      repository: quay.io/prometheus/prometheus
-      tag: v2.28.1
+      registry: quay.io
+      repository: prometheus/prometheus
+      tag: ""
       sha: ""
 
     ## Tolerations for use with node taints
