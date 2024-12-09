@@ -1,30 +1,27 @@
 data "aws_caller_identity" "current" {}
 
- data "aws_ami" "amazon_linux_2" {
-   most_recent = true
-   owners      = ["amazon"]
+data "aws_ami" "amazon_linux_2" {
+ most_recent = true
+ owners      = ["amazon"]
 
-   filter {
-     name   = "owner-alias"
-     values = ["amazon"]
-   }
-
-
-   filter {
-     name   = "name"
-     values = ["amzn2-ami-hvm*"]
-   }
+ filter {
+   name   = "owner-alias"
+   values = ["amazon"]
  }
 
-data "terraform_remote_state" "vpc" {
+ filter {
+   name   = "name"
+   values = ["amzn2-ami-hvm*"]
+ }
+}
+
+data "terraform_remote_state" "primary" {
   backend = "s3" 
   config = {
-     bucket = "udacity-tf-<your_name>"
+     bucket = "udacity-tf-yosh-east2"
      key    = "terraform/terraform.tfstate"
      region = "us-east-2"
    }
-
-
 }
 
 data "aws_iam_policy" "instance-policy" {
